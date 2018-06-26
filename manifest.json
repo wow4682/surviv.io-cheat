@@ -31,7 +31,6 @@
 		"payload/menu.html",
 		"payload/menu.css",
 		"payload/FPSCounter.html",
-		"payload/glitchLogo.css",
 		"third_party/jquery-3.3.1.min.js",
 		"webpack_override.js"
 	],
@@ -47,7 +46,6 @@
 		],
 		"js": ["start.js"],
 		"css": [
-			"payload/glitchLogo.css",
 			"payload/menu.css",
 			"payload/disableButtons.css"
 		],
