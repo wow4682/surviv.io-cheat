@@ -15,9 +15,9 @@ var loadFile = function(fileName) {
 	try{
 		var request = new XMLHttpRequest();
 		request.open('GET', chrome.extension.getURL(fileName), false);
-		request.send(null);  
-		if (request.status === 200) {  
-		  return request.responseText;  
+		request.send(null);
+		if (request.status === 200) {
+		  return request.responseText;
 		}
 	}
 	catch(e) {}
@@ -27,22 +27,20 @@ var loadFile = function(fileName) {
 (function() {
 	try {
 		var e =  document.createElement("script");
-		
+
 		var menuHtml = loadFile('payload/menu.html');
 		var helpEnHtml = loadFile('payload/help-en.html');
-		var helpRuHtml = loadFile('payload/help-ru.html');
 		var counterHtml = loadFile('payload/FPSCounter.html');
 
 		code = "window.tempVars = {" +
 			"menuHtml: `" + menuHtml + "`," +
 			"helpEnHtml: `" + helpEnHtml + "`," +
-			"helpRuHtml: `" + helpRuHtml + "`," +
 			"counterHtml: `" + counterHtml + "`," +
 			"};";
-			
+
 		e.setAttribute('type', 'text/javascript');
 		e.innerHTML = code;
-		
+
 		(document.head || document.documentElement).appendChild(e);
 		e.onload = function() {
 			e.parentNode.removeChild(e);
@@ -63,8 +61,8 @@ runScript('payload/gameRender.js');
 runScript('payload/pingOverride.js');
 
 window.addEventListener("load", function load(event){
-    window.removeEventListener("load", load, false); 
-	
+    window.removeEventListener("load", load, false);
+
 	// injection point
 	runScript('webpack_override.js');
 
@@ -75,4 +73,3 @@ window.addEventListener("load", function load(event){
 			runScript('payload/documentChange.js');
 	});
 },false);
-

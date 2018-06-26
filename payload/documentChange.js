@@ -4,7 +4,7 @@
 		setTimeout(adsClearTimer, 200);
 	};
 	$(document).ready(() => adsClearTimer());
-	
+
 	var addHelp = function() {
 		if(!window.tempVars) {
 			setTimeout(addHelp, 100);
@@ -17,24 +17,21 @@
 			setTimeout(addHelp, 100);
 			return;
 		}
-		
+
 		$("#ad-block-main-med-rect").css("width","auto");
 		$("#ad-block-main-med-rect").css("overflow-y","auto");
-		
+
 		$("#ad-block-main-med-rect").append(window.tempVars.helpEnHtml);
-		$("#ad-block-main-med-rect").append(window.tempVars.helpRuHtml);
-		
+
 		var updateHelp = function() {
 			setTimeout(updateHelp, 50);
 			if(window.gameVars){
-				var en = window.gameVars.Language != "ru";
-				$(".help-en").css("display", en ? "block" : "none");
-				$(".help-ru").css("display", en ? "none" : "block");
-			}	
+				$(".help-en").css("display", "block");
+			}
 		};
 		updateHelp();
 	}
-	
+
 	$(document).ready(() => {
 		addHelp();
 		$("<style>")
@@ -45,9 +42,9 @@
 			}")
 			.appendTo("head");
 	});
-	
+
 	$(document).off("mousedown");
-	
+
 	var updateLang = function() {
 		setTimeout(updateLang, 50);
 		if(window.gameVars)
