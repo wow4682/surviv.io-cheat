@@ -288,4 +288,10 @@ window.gameFunctions.gameRender = function(){
 		window.gameVars.UI.FPSText.text("FPS: " + Math.round(FPS));
 		window.gameVars.UI.FPSText.css('color', colorToString(FPSCol));
 	}
+
+	if(window.menu.UserSetting.look.performanceEnabled) {
+		$("#fps_ping_wrapper").css("display", "block");
+	} else {
+		$("#fps_ping_wrapper").css("display", "none");
+	}
 }

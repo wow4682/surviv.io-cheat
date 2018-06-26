@@ -42,6 +42,7 @@
 					autolootDropDelay:				0.8,
 				},
 				look: {
+					performanceEnabled:				true,
 					zoomEnabled: 					true,
 					zoomSpeed:						5,
 					obstaclesAlphaEnabled: 			true,
@@ -153,6 +154,7 @@
 				autolootDropDelay:				sliderGetValue("autolootDropDelay"),
 			};
 			window.menu.UserSetting.look = {
+				performanceEnabled:				btnGetState("performanceEnabled"),
 				zoomEnabled: 					btnGetState("zoomEnabled"),
 				zoomSpeed:						sliderGetValue("zoomSpeed"),
 				obstaclesAlphaEnabled: 			btnGetState("obstaclesAlphaEnabled"),
@@ -225,6 +227,7 @@
 			// look
 			state = window.menu.UserSetting.look;
 
+			btnSetState("performanceEnabled",				state.performanceEnabled);
 			btnSetState("zoomEnabled",						state.zoomEnabled);
 			sliderSetValue("zoomSpeed",						state.zoomSpeed);
 			btnSetState("obstaclesAlphaEnabled",			state.obstaclesAlphaEnabled);
