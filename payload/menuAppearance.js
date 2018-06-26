@@ -11,14 +11,14 @@
 			setTimeout(doWork, 100);
 			return;
 		}
-		
+
 		$("#ui-center").append(window.tempVars.menuHtml);
-		
+
 		window.menu = {};
 		window.menu.UserSetting = {};
-		
+
 		var defaultSetting = function(){
-			
+
 			window.menu.UserSetting = {
 				shoot: {
 					lasersightEnabled: 				true,
@@ -86,7 +86,7 @@
 				}
 			}
 		}
-		
+
 		var loadSetting = function(){
 			var mergeCategory = function(category, base){
 				for (var param in base) {
@@ -95,16 +95,16 @@
 				   }
 				}
 			}
-			
+
 			var storedString = localStorage.getItem('cheat2Setting');
-			
+
 			if(!storedString || storedString == "undefined")
 				return;
-			
+
 			var stored = JSON.parse(storedString);
 			var base = window.menu.UserSetting;
-			
-			
+
+
 			for (var cat in base) {
 			   if (base.hasOwnProperty(cat))
 					if (stored.hasOwnProperty(cat))
@@ -112,24 +112,24 @@
 					else
 						stored[cat] = base[cat];
 			}
-			
+
 			window.menu.UserSetting = stored;
 		}
-		
+
 		var saveSetting = function(){
 			localStorage.setItem('cheat2Setting', JSON.stringify(window.menu.UserSetting))
 		}
-		
+
 		var updateSetting = function(){
-			
+
 			var btnGetState = function(btn){
 				return $("#btn-cheat-" + btn).hasClass("enabled");
 			}
-			
+
 			var sliderGetValue = function(slider){
 				return $("#slider-" + slider).val();
 			}
-			
+
 			window.menu.UserSetting.shoot = {
 				lasersightEnabled: 				btnGetState("lasersightEnabled"),
 				fragGrenadeTimerEnabled: 		btnGetState("fragGrenadeTimerEnabled"),
@@ -164,40 +164,40 @@
 				enemyLinesEnabled: 				btnGetState("enemyLinesEnabled"),
 			};
 		}
-			
-			
+
+
 		var updateMenu = function(){
-			
+
 			var btnSetState = function(btn, state){
 				$("#btn-cheat-" + btn).removeClass(state ? "disabled" : "enabled");
 				$("#btn-cheat-" + btn).addClass(state ? "enabled" : "disabled");
 			}
-			
+
 			var sliderSetValue = function(slider, value){
 				var cap = $("#menu-text-" + slider).text();
 				$("#menu-text-" + slider).text(cap.substr(0, cap.indexOf(': ') + 2) +  value.toString())
 				$("#slider-" + slider).val(value);
 			}
-			
+
 			var btnSetBind = function(btn, bind){
 				var btn = $("#btn-bind-" + btn);
 				var cap = btn.text();
 				cap = cap.substr(0, cap.indexOf(': ') + 2);
-				
+
 				var keyName =
 				(bind.ctrl ? "Ctrl-" : "") +
 				(bind.alt ? "Alt-" : "") +
 				(bind.shift ? "Shift-" : "") +
 				window.gameVars.Input.Keys.NameOf(bind.code);
-				
+
 				btn.text(cap +  keyName)
 			}
-			
+
 			var state = {};
-			
+
 			// shoot
 			state = window.menu.UserSetting.shoot;
-			
+
 			btnSetState("lasersightEnabled",				state.lasersightEnabled);
 			btnSetState("fragGrenadeTimerEnabled",			state.fragGrenadeTimerEnabled);
 			btnSetState("bumpFireEnabled",					state.bumpFireEnabled);
@@ -210,18 +210,18 @@
 			btnSetState("autoAimPingCorrectionEnabled",		state.autoAimPingCorrectionEnabled);
 			// btnSetState("autoAimAntiAntiCheatEnabled",	state.autoAimAntiAntiCheatEnabled);
 			// sliderSetValue("autoAimAntiAntiCheatInertia",state.autoAimAntiAntiCheatInertia);
-			
+
 			// loot
 			state = window.menu.UserSetting.loot;
-			
+
 			// btnSetState("lootHighlightEnabled",				state.lootHighlightEnabled);
 			btnSetState("autolootEnabled",					state.autolootEnabled);
 			sliderSetValue("autolootSafeDistance",			state.autolootSafeDistance);
 			sliderSetValue("autolootDropDelay",				state.autolootDropDelay);
-			
+
 			// look
 			state = window.menu.UserSetting.look;
-			
+
 			btnSetState("zoomEnabled",						state.zoomEnabled);
 			sliderSetValue("zoomSpeed",						state.zoomSpeed);
 			btnSetState("obstaclesAlphaEnabled",			state.obstaclesAlphaEnabled);
@@ -233,10 +233,10 @@
 			btnSetState("smokeAlphaEnabled",				state.smokeAlphaEnabled);
 			sliderSetValue("smokeAlphaLevel",				state.smokeAlphaLevel);
 			btnSetState("enemyLinesEnabled",				state.enemyLinesEnabled);
-			
+
 			//binds
 			state = window.menu.UserSetting.binds;
-			
+
 			btnSetBind("autoAim",							state.autoAim);
 			// btnSetBind("switchMainWeapon",					state.switchMainWeapon);
 			btnSetBind("zoomIn",							state.zoomIn);
@@ -267,50 +267,50 @@
 			btnSetBind("useMedical9",						state.useMedical9);
 			btnSetBind("useMedical0",						state.useMedical0);
 		}
-		
+
 		var changeTab = function(tabName){
-			
+
 			var btnSetState = function(btn, state){
 				$("#btn-tab-selector-" + btn).removeClass(state ? "disabled" : "enabled");
 				$("#btn-tab-selector-" + btn).addClass(state ? "enabled" : "disabled");
 			}
-			
+
 			var tabSetState = function(tab, state){
 				$("#tab-" + tab).css("display", state ? "block" : "none");
 			}
-			
+
 			var updateTabCategory = function(tab){
 				btnSetState(tab, tab == tabName);
 				tabSetState(tab, tab == tabName);
 			}
-			
+
 			updateTabCategory("shoot");
 			updateTabCategory("loot");
 			updateTabCategory("look");
 			updateTabCategory("binds");
 		}
-		
+
 		var setEvents = function(tabName){
-			
+
 			var btnSetEvent = function(btn, tab){
-				
+
 				var btnElement = $("#btn-cheat-" + btn);
 				var name = btn;
 				var tabb = tab;
-				
+
 				btnElement.click(() => {
 					window.menu.UserSetting[tabb][name] = !window.menu.UserSetting[tabb][name];
 					saveSetting();
 					updateMenu();
 				});
 			}
-			
+
 			var btnBindSetEvent = function(btn, tab){
-				
+
 				var btnElement = $("#btn-bind-" + btn);
 				var name = btn;
 				var tabb = tab;
-				
+
 				btnElement.click(() => {
 					if(window.gameVars.Input.GlobalHookCallback)
 						window.gameVars.Input.GlobalHookCallback.call(this, null);
@@ -325,31 +325,31 @@
 					}
 				});
 			}
-			
+
 			var sliderSetEvent = function(slider, tab){
 				var sliderElement = $("#slider-" + slider);
 				var name = slider;
 				var tabb = tab;
-				
+
 				sliderElement.change((e) => {
 					window.menu.UserSetting[tab][name] = parseFloat(sliderElement.val());
 					saveSetting();
 					updateMenu();
 				});
 			}
-			
+
 			var tabSetEvent = function(tab){
-				
+
 				var tabButton = $("#btn-tab-selector-" + tab);
 				var tabName = tab;
 				tabButton.click(() => {
 					changeTab(tabName);
 				});
-				
+
 				function endsWith(str, suffix) {
 					return str.indexOf(suffix, str.length - suffix.length) !== -1;
 				}
-				
+
 				for (var name in window.menu.UserSetting[tab]) {
 					if(tab == "binds")
 						btnBindSetEvent(name, tab);
@@ -359,47 +359,47 @@
 						sliderSetEvent(name, tab);
 				}
 			}
-			
+
 			tabSetEvent("shoot");
 			tabSetEvent("loot");
 			tabSetEvent("look");
 			tabSetEvent("binds");
 		}
-		
+
 		var menuTimer = function(){
 			setTimeout(menuTimer, 100);
-			
+
 			var baseMenu = $("#ui-game-menu")
-			
+
 			if(!baseMenu)
 				return;
-			
+
 			var menuActive = baseMenu.css("display") != "none";
-			
+
 			if(window.gameVars)
 				window.gameVars.Menu = menuActive;
-			
+
 			var cheatMenu = $("#cheat-menu");
-			
+
 			var center = $("#ui-center");
-			
+
 			center.css("display", "inline-grid");
 			center.css("grid-gap", "25px");
 			baseMenu.css("grid-row", "1");
 			cheatMenu.css("display", menuActive ? "block" : "none");
 			cheatMenu.css("grid-row", "1");
 		}
-		
+
 		defaultSetting();
 		loadSetting();
 		updateMenu();
 		changeTab("shoot");
 		setEvents();
 		menuTimer();
-		
+
 		// Other UI stuff is here for now
 		$("#ui-top-left").append(window.tempVars.counterHtml);
-		
+
 		window.gameVars.UI.FPSText = $("#fps_text");
 		window.gameVars.UI.LATText = $("#lat_text");
 		window.gameVars.UI.LAGText = $("#lag_text");

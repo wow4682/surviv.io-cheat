@@ -1,14 +1,14 @@
 {
-	"name": "SURVIV.IO Cheat",
-	"version": "0.14.8",
-	"description": "Cheat for surviv.io game.",
+	"name": "Survivr Utilities",
+	"version": "0.1.0",
+	"description": "Utilities for surviv.io game. 0.1.0: Basic fork of existing cheat",
 	"permissions": [
 		"*://surviv.io/*",
 		"*://surviv2.io/*",
 		"*://2dbattleroyale.com/*"
 	],
 	"browser_action": {
-		"default_title": "SURVIV.IO Cheat dev",
+		"default_title": "Survivr Utilities",
 		"default_icon": "128.png"
 	},
 	"icons": {
@@ -40,11 +40,15 @@
 		"matches": [
 			"*://surviv.io/*",
 			"*://surviv2.io/*",
-			"*://2dbattleroyale.com/*"
+			"*://2dbattleroyale.com/*",
+
+			"*://*.surviv.io/*",
+			"*://*.surviv2.io/*",
+			"*://*.2dbattleroyale.com/*"
 		],
 		"js": ["start.js"],
 		"css": [
-			"payload/glitchLogo.css", 
+			"payload/glitchLogo.css",
 			"payload/menu.css",
 			"payload/disableButtons.css"
 		],
